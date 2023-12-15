@@ -20,13 +20,14 @@ export default function Card() {
   const [title, setTitle] = useState("name");
 
   const saveUser = (newUser) => {
-    setSavedUsers([newUser, ...savedUsers]);
+    setSavedUsers((prevSavedUsers) => [newUser, ...prevSavedUsers]);
   };
 
   const getRandomUser = async () => {
     try {
       const url = "https://randomuser.me/api/";
       const res = await axios.get(url);
+      console.log(res.data.results[0]);
       setActiveUser(res.data.results[0]);
     } catch (err) {
       console.log(err);
@@ -133,7 +134,16 @@ export default function Card() {
             </thead>
             <tbody>
               {savedUsers.map((user) => {
-                return <tr className="body-tr">{user.name?.first}</tr>;
+                return (
+                  <tr key={user.id.value}>
+                    <td className="body-tr">
+                      {user.name?.first} {user.name?.last}
+                    </td>
+                    <td className="body-tr">{user.email}</td>
+                    <td className="body-tr">{user.phone}</td>
+                    <td className="body-tr">{user.dob.age}</td>
+                  </tr>
+                );
               })}
             </tbody>
           </table>
