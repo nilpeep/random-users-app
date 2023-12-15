@@ -13,16 +13,21 @@ import { useState, useEffect } from "react";
 const defaultImage = "https://randomuser.me/api/portraits/men/75.jpg";
 
 export default function Card() {
-  const [user, setUser] = useState(null);
+  const [activeUser, setActiveUser] = useState(null);
+  const [savedUsers, setSavedUsers] = useState([]);
 
   const [activeInfo, setActiveInfo] = useState(null);
   const [title, setTitle] = useState("name");
+
+  const saveUser = (newUser) => {
+    setSavedUsers([newUser, ...savedUsers]);
+  };
 
   const getRandomUser = async () => {
     try {
       const url = "https://randomuser.me/api/";
       const res = await axios.get(url);
-      setUser(res.data.results[0]);
+      setActiveUser(res.data.results[0]);
     } catch (err) {
       console.log(err);
     }
@@ -33,11 +38,11 @@ export default function Card() {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      setActiveInfo(`${user.name?.first} ${user.name?.last}`);
+    if (activeUser) {
+      setActiveInfo(`${activeUser.name?.first} ${activeUser.name?.last}`);
     }
     setTitle("name");
-  }, [user]);
+  }, [activeUser]);
 
   const handleDisplay = (value, title) => {
     setActiveInfo(value);
@@ -52,7 +57,7 @@ export default function Card() {
       <div className="block">
         <div className="container">
           <img
-            src={user?.picture?.large}
+            src={activeUser?.picture?.large}
             alt="random user"
             className="user-img"
           />
@@ -61,7 +66,10 @@ export default function Card() {
           <div className="values-list">
             <button
               onMouseOver={() =>
-                handleDisplay(`${user.name.first} ${user.name.last}`, "name")
+                handleDisplay(
+                  `${activeUser.name.first} ${activeUser.name.last}`,
+                  "name"
+                )
               }
               className="icon"
               data-label="name"
@@ -69,14 +77,14 @@ export default function Card() {
               <img src={womanSvg} alt="user" id="iconImg" />
             </button>
             <button
-              onMouseOver={() => handleDisplay(user.email, "email")}
+              onMouseOver={() => handleDisplay(activeUser.email, "email")}
               className="icon"
               data-label="email"
             >
               <img src={mailSvg} alt="mail" id="iconImg" />
             </button>
             <button
-              onMouseOver={() => handleDisplay(user.dob?.age, "age")}
+              onMouseOver={() => handleDisplay(activeUser.dob?.age, "age")}
               className="icon"
               data-label="age"
             >
@@ -85,7 +93,7 @@ export default function Card() {
             <button
               onMouseOver={() =>
                 handleDisplay(
-                  `${user.location.street.name}, ${user.location.city}`,
+                  `${activeUser.location.street.name}, ${activeUser.location.city}`,
                   "street"
                 )
               }
@@ -105,7 +113,11 @@ export default function Card() {
             <button className="btn" type="button" onClick={getRandomUser}>
               new user
             </button>
-            <button className="btn" type="button">
+            <button
+              onClick={() => saveUser(activeUser)}
+              className="btn"
+              type="button"
+            >
               add user
             </button>
           </div>
@@ -120,7 +132,9 @@ export default function Card() {
               </tr>
             </thead>
             <tbody>
-              <tr className="body-tr"></tr>
+              {savedUsers.map((user) => {
+                return <tr className="body-tr">{user.name?.first}</tr>;
+              })}
             </tbody>
           </table>
         </div>
