@@ -7,6 +7,7 @@ import mapSvg from "../../assets/map.svg";
 import phoneSvg from "../../assets/phone.svg";
 import padlockSvg from "../../assets/padlock.svg";
 import cwSvg from "../../assets/cw.svg";
+import bird from "../../assets/bird.jpg";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -20,6 +21,7 @@ export default function Card() {
   const [title, setTitle] = useState("name");
 
   const saveUser = (newUser) => {
+    console.log(savedUsers);
     setSavedUsers((prevSavedUsers) => [newUser, ...prevSavedUsers]);
   };
 
@@ -53,7 +55,7 @@ export default function Card() {
   return (
     <main>
       <div className="block bcg-orange">
-        <img src={cwSvg} alt="cw" id="cw" />
+        {/* <img src={bird} alt="cw" id="cw" /> */}
       </div>
       <div className="block">
         <div className="container">
@@ -103,10 +105,22 @@ export default function Card() {
             >
               <img src={mapSvg} alt="map" id="iconImg" />
             </button>
-            <button className="icon" data-label="phone">
+            <button
+              onMouseOver={() =>
+                handleDisplay(activeUser.phone, "phone number")
+              }
+              className="icon"
+              data-label="phone"
+            >
               <img src={phoneSvg} alt="phone" id="iconImg" />
             </button>
-            <button className="icon" data-label="password">
+            <button
+              onMouseOver={() =>
+                handleDisplay(activeUser.login.password, "password")
+              }
+              className="icon"
+              data-label="password"
+            >
               <img src={padlockSvg} alt="lock" id="iconImg" />
             </button>
           </div>
