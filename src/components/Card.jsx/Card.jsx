@@ -72,7 +72,7 @@ export default function Card() {
               className="icon"
               data-label="name"
             >
-              <img src={activeUser.gender === 'female' ? womanSvg : manSvg} alt="user" id="iconImg" />
+              <img src={activeUser?.gender === 'female' ? womanSvg : manSvg} alt="user" id="iconImg" />
             </button>
             <button
               onMouseOver={() => handleDisplay(activeUser.email, "email")}
