@@ -9,6 +9,8 @@ import axios from "axios";
 import userIcon from "../../assets/userIcon.png"
 import { useState, useEffect } from "react";
 import { toastErrorNotify,toastSuccessNotify } from "../../helper/ToastNotify";
+import { Spinner } from "react-bootstrap";
+
 
 export default function Card() {
 
@@ -17,7 +19,7 @@ export default function Card() {
   const [activeUser, setActiveUser] = useState([]);
   const [savedUsers, setSavedUsers] = useState([]);
 
-  const [activeInfo, setActiveInfo] = useState([]);
+  const [activeInfo, setActiveInfo] = useState('');
   const [title, setTitle] = useState("name");
 
   
@@ -49,7 +51,8 @@ export default function Card() {
     }
   };
   
-  console.log(activeUser)
+  console.log(activeInfo)
+
   useEffect(() => {
     getRandomUser();
     
@@ -68,7 +71,7 @@ export default function Card() {
   }, [activeUser]);
 
   const handleDisplay = (value, title) => {
-    setActiveInfo(value);
+    if(!value==undefined)setActiveInfo(value);
     setTitle(title);
   };
 
@@ -79,13 +82,16 @@ export default function Card() {
       </div>
       <div className="block">
         <div className="container">
-          <img
-            src={activeUser.picture ? activeUser?.picture?.large : userIcon}
+          {
+            activeUser.picture ?  <img
+            src={activeUser?.picture?.large}
             alt="random user"
             className="user-img"
-          />
+          /> : <Spinner className="spinner"/>
+          }
+          
           <p className="user-title">My {title} is</p>
-          <p className="user-value">{activeInfo}</p>
+          <p className="user-value">{activeInfo === 'undefined undefined' ? '' : activeInfo}</p>
           <div className="values-list">
             <button
               onMouseOver={() =>
@@ -116,7 +122,7 @@ export default function Card() {
             <button
               onMouseOver={() =>
                 handleDisplay(
-                  `${activeUser?.location?.street?.name}, ${activeUser?.location.city}`,
+                  `${activeUser?.location?.street?.name}, ${activeUser?.location?.city}`,
                   "street"
                 )
               }
@@ -136,7 +142,7 @@ export default function Card() {
             </button>
             <button
               onMouseOver={() =>
-                handleDisplay(activeUser.login.password, "password")
+                handleDisplay(activeUser.login?.password, "password")
               }
               className="icon"
               data-label="password"
