@@ -1,19 +1,17 @@
 import mailSvg from "../../assets/mail.svg";
 import manSvg from "../../assets/man.svg";
 import womanSvg from "../../assets/woman.svg";
-import manAgeSvg from "../../assets/growing-up-man.svg";
 import womanAgeSvg from "../../assets/growing-up-woman.svg";
 import mapSvg from "../../assets/map.svg";
 import phoneSvg from "../../assets/phone.svg";
 import padlockSvg from "../../assets/padlock.svg";
-import cwSvg from "../../assets/cw.svg";
-import bird from "../../assets/bird.jpg";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const defaultImage = "https://randomuser.me/api/portraits/men/75.jpg";
-
 export default function Card() {
+
+  const defaultImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/User_icon-cp.svg/1200px-User_icon-cp.svg.png'
+
   const [activeUser, setActiveUser] = useState(null);
   const [savedUsers, setSavedUsers] = useState([]);
 
@@ -35,10 +33,16 @@ export default function Card() {
       console.log(err);
     }
   };
-
+  
   useEffect(() => {
     getRandomUser();
+    
   }, []);
+  
+  // useEffect(() =>{
+  //   setActiveInfo(`${activeUser?.name?.first} ${activeUser?.name?.last}`);
+
+  // }, [activeUser])
 
   useEffect(() => {
     if (activeUser) {
@@ -60,7 +64,7 @@ export default function Card() {
       <div className="block">
         <div className="container">
           <img
-            src={activeUser?.picture?.large}
+            src={activeUser? activeUser?.picture?.large : defaultImg}
             alt="random user"
             className="user-img"
           />
@@ -77,7 +81,7 @@ export default function Card() {
               className="icon"
               data-label="name"
             >
-              <img src={womanSvg} alt="user" id="iconImg" />
+              <img src={activeUser?.gender === 'female' ? womanSvg : manSvg} alt="user" id="iconImg" />
             </button>
             <button
               onMouseOver={() => handleDisplay(activeUser.email, "email")}
@@ -87,7 +91,7 @@ export default function Card() {
               <img src={mailSvg} alt="mail" id="iconImg" />
             </button>
             <button
-              onMouseOver={() => handleDisplay(activeUser.dob?.age, "age")}
+              onMouseOver={() => handleDisplay(activeUser?.dob?.age, "age")}
               className="icon"
               data-label="age"
             >
@@ -96,7 +100,7 @@ export default function Card() {
             <button
               onMouseOver={() =>
                 handleDisplay(
-                  `${activeUser.location.street.name}, ${activeUser.location.city}`,
+                  `${activeUser?.location.street.name}, ${activeUser?.location.city}`,
                   "street"
                 )
               }
@@ -107,7 +111,7 @@ export default function Card() {
             </button>
             <button
               onMouseOver={() =>
-                handleDisplay(activeUser.phone, "phone number")
+                handleDisplay(activeUser?.phone, "phone number")
               }
               className="icon"
               data-label="phone"
