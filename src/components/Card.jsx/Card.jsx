@@ -10,6 +10,7 @@ import userIcon from "../../assets/userIcon.png"
 import { useState, useEffect } from "react";
 import { toastErrorNotify,toastSuccessNotify } from "../../helper/ToastNotify";
 import { Spinner } from "react-bootstrap";
+import {Table} from "react-bootstrap";
 
 
 export default function Card() {
@@ -71,7 +72,7 @@ export default function Card() {
   }, [activeUser]);
 
   const handleDisplay = (value, title) => {
-    if(!value==undefined)setActiveInfo(value);
+    setActiveInfo(value);
     setTitle(title);
   };
 
@@ -163,37 +164,42 @@ export default function Card() {
             </button>
           </div>
 
-          <table className="table">
-            <thead>
-              <tr className="head-tr">
-                <th className="th">Gender</th>
-                <th className="th">Firstname</th>
-                <th className="th">Email</th>
-                <th className="th">Phone</th>
-                <th className="th">Age</th>
-              </tr>
-            </thead>
-            <tbody>
-              {savedUsers.map((user, i) => {
+          <div className="table table-responsive">
+
+          <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>Gender</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Tel</th>
+          <th>Age</th>
+        </tr>
+      </thead>
+      <tbody>
+      {savedUsers.map((user, i) => {
                 return (
                   <tr key={i}>
-                    <td className="body-tr ">
+                    <td >
                       <img className="t-img" src={user.gender == 'female' ? womanSvg : manSvg} alt="" />
                     </td>
-                    <td className="body-tr">
+                    <td>
                       {user.name?.first} {user.name?.last}
                     </td>
-                    <td className="body-tr">{user.email}</td>
-                    <td className="body-tr">{user.phone}</td>
-                    <td className="body-tr">{user.dob.age}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone}</td>
+                    <td>{user.dob.age}</td>
                   </tr>
                 );
               })}
-            </tbody>
-          </table>
+      </tbody>
+    </Table>
+          </div>
+
+
+          
         </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "center" }}></div>
     </main>
   );
 }

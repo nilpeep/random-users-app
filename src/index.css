@@ -82,6 +82,13 @@ p {
   h4 {
     line-height: 1;
   }
+  .table td, .table th {
+    padding: .5rem; /* Daha az padding */
+    font-size: .875rem; /* Daha küçük font boyutu */
+    
+  }
+ 
+
 }
 
 /*  global classes */
@@ -216,13 +223,7 @@ p {
   color: #9e4d8d;
 }
 
-.table {
-  width: 100%;
-  margin-top: 10px;
-  background-color: white;
-  color: antiquewhite;
-  border: 1px solid white;
-}
+
 
 td,
 th {
