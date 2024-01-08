@@ -6,34 +6,50 @@ import mapSvg from "../../assets/map.svg";
 import phoneSvg from "../../assets/phone.svg";
 import padlockSvg from "../../assets/padlock.svg";
 import axios from "axios";
+import userIcon from "../../assets/userIcon.png"
 import { useState, useEffect } from "react";
+import { toastErrorNotify,toastSuccessNotify } from "../../helper/ToastNotify";
 
 export default function Card() {
 
   const defaultImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/User_icon-cp.svg/1200px-User_icon-cp.svg.png'
 
-  const [activeUser, setActiveUser] = useState(null);
+  const [activeUser, setActiveUser] = useState([]);
   const [savedUsers, setSavedUsers] = useState([]);
 
-  const [activeInfo, setActiveInfo] = useState(null);
+  const [activeInfo, setActiveInfo] = useState([]);
   const [title, setTitle] = useState("name");
 
+  
   const saveUser = (newUser) => {
-    console.log(savedUsers);
-    setSavedUsers((prevSavedUsers) => [newUser, ...prevSavedUsers]);
+    
+      //filter,find veya some ile user varmı kontrolü yapabiliriz, filter tüm eşleşenleri dizi döner, find ilk eşleşeni obje döner, some eşlesen varsa boolean döner
+      console.log(newUser)
+      const isExist = savedUsers.some((user) => user.name?.first === newUser.name?.first)
+  
+      if(isExist){
+        toastErrorNotify('user already saved')
+      }else{
+        setSavedUsers([...savedUsers, newUser]) 
+        toastSuccessNotify('user saved!')
+      }
+    
+
+    ;
   };
 
   const getRandomUser = async () => {
     try {
       const url = "https://randomuser.me/api/";
       const res = await axios.get(url);
-      console.log(res.data.results[0]);
+   
       setActiveUser(res.data.results[0]);
     } catch (err) {
       console.log(err);
     }
   };
   
+  console.log(activeUser)
   useEffect(() => {
     getRandomUser();
     
@@ -64,7 +80,7 @@ export default function Card() {
       <div className="block">
         <div className="container">
           <img
-            src={activeUser? activeUser?.picture?.large : defaultImg}
+            src={activeUser.picture ? activeUser?.picture?.large : userIcon}
             alt="random user"
             className="user-img"
           />
@@ -100,7 +116,7 @@ export default function Card() {
             <button
               onMouseOver={() =>
                 handleDisplay(
-                  `${activeUser?.location.street.name}, ${activeUser?.location.city}`,
+                  `${activeUser?.location?.street?.name}, ${activeUser?.location.city}`,
                   "street"
                 )
               }
@@ -151,9 +167,9 @@ export default function Card() {
               </tr>
             </thead>
             <tbody>
-              {savedUsers.map((user) => {
+              {savedUsers.map((user, i) => {
                 return (
-                  <tr key={user.id.value}>
+                  <tr key={i}>
                     <td className="body-tr">
                       {user.name?.first} {user.name?.last}
                     </td>
