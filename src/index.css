@@ -229,6 +229,10 @@ th {
   background-color: #96d4d4;
 }
 
+.t-img{
+  width: 30px;
+}
+
 .body-tr {
   height: 40px;
   color: rgb(103, 103, 103);

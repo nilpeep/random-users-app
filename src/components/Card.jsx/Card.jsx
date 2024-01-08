@@ -166,6 +166,7 @@ export default function Card() {
           <table className="table">
             <thead>
               <tr className="head-tr">
+                <th className="th">Gender</th>
                 <th className="th">Firstname</th>
                 <th className="th">Email</th>
                 <th className="th">Phone</th>
@@ -176,6 +177,9 @@ export default function Card() {
               {savedUsers.map((user, i) => {
                 return (
                   <tr key={i}>
+                    <td className="body-tr ">
+                      <img className="t-img" src={user.gender == 'female' ? womanSvg : manSvg} alt="" />
+                    </td>
                     <td className="body-tr">
                       {user.name?.first} {user.name?.last}
                     </td>
