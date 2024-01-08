@@ -6,7 +6,6 @@ import mapSvg from "../../assets/map.svg";
 import phoneSvg from "../../assets/phone.svg";
 import padlockSvg from "../../assets/padlock.svg";
 import axios from "axios";
-import userIcon from "../../assets/userIcon.png"
 import { useState, useEffect } from "react";
 import { toastErrorNotify,toastSuccessNotify } from "../../helper/ToastNotify";
 import { Spinner } from "react-bootstrap";
@@ -15,7 +14,6 @@ import {Table} from "react-bootstrap";
 
 export default function Card() {
 
-  const defaultImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/User_icon-cp.svg/1200px-User_icon-cp.svg.png'
 
   const [activeUser, setActiveUser] = useState([]);
   const [savedUsers, setSavedUsers] = useState([]);
@@ -33,7 +31,7 @@ export default function Card() {
       if(isExist){
         toastErrorNotify('user already saved')
       }else{
-        setSavedUsers([...savedUsers, newUser]) 
+        setSavedUsers([ newUser, ...savedUsers]) 
         toastSuccessNotify('user saved!')
       }
     
@@ -181,7 +179,7 @@ export default function Card() {
                 return (
                   <tr key={i}>
                     <td >
-                      <img className="t-img" src={user.gender == 'female' ? womanSvg : manSvg} alt="" />
+                      <img className="t-img" src={user.gender === 'female' ? womanSvg : manSvg} alt="" />
                     </td>
                     <td>
                       {user.name?.first} {user.name?.last}
