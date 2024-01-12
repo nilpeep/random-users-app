@@ -53,6 +53,7 @@ export default function Card() {
    
       setActiveUser(res.data.results[0]);
     } catch (err) {
+      toastErrorNotify('user could not fetch')
       console.log(err);
     }
   };
