@@ -117,6 +117,7 @@ export default function Card() {
                   "name"
                 )
               }
+              style={{borderRadius:'10px',backgroundColor:title == 'name' ? '#DFFF00' : ''}}
               className="icon"
               data-label="name"
             >
@@ -126,6 +127,7 @@ export default function Card() {
               onMouseOver={() => handleDisplay(activeUser.email, "email")}
               className="icon"
               data-label="email"
+              style={{borderRadius:'10px',backgroundColor:title == 'email' ? '#DFFF00' : ''}}
             >
               <img src={mailSvg} alt="mail" id="iconImg" />
             </button>
@@ -133,6 +135,7 @@ export default function Card() {
               onMouseOver={() => handleDisplay(activeUser?.dob?.age, "age")}
               className="icon"
               data-label="age"
+              style={{borderRadius:'10px',backgroundColor:title == 'age' ? '#DFFF00' : ''}}
             >
               <img src={womanAgeSvg} alt="age" id="iconImg" />
             </button>
@@ -145,6 +148,7 @@ export default function Card() {
               }
               className="icon"
               data-label="street"
+              style={{borderRadius:'10px',backgroundColor:title == 'street' ? '#DFFF00' : ''}}
             >
               <img src={mapSvg} alt="map" id="iconImg" />
             </button>
@@ -154,6 +158,7 @@ export default function Card() {
               }
               className="icon"
               data-label="phone"
+              style={{borderRadius:'10px',backgroundColor:title == 'phone number' ? '#DFFF00' : ''}}
             >
               <img src={phoneSvg} alt="phone" id="iconImg" />
             </button>
@@ -163,6 +168,7 @@ export default function Card() {
               }
               className="icon"
               data-label="password"
+              style={{borderRadius:'10px',backgroundColor:title == 'password' ? '#DFFF00' : ''}}
             >
               <img src={padlockSvg} alt="lock" id="iconImg" />
             </button>
